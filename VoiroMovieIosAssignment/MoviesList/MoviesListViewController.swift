@@ -6,14 +6,17 @@
 //
 
 import UIKit
+import Foundation
 
-class ViewController: UIViewController {
+class MoviesListViewController: UIViewController,UISearchBarDelegate {
 
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var tableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchBar.delegate = self
         // Do any additional setup after loading the view.
     }
-
-
 }
 
