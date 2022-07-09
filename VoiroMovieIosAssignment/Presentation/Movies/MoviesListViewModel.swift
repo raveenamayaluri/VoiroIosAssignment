@@ -15,12 +15,12 @@ protocol MovieViewModelProtocol {
 class MoviesListViewModel {
     
     var delegate: MovieViewModelProtocol?
-    let apiService: NetworkManagerprotocol
+    let apiService: ApiManagerprotocol
     
     private var movies = [Movie]()
     private var filteredMovies = [Movie]()
     
-    init(apiService:NetworkManagerprotocol = NetworkManager()){
+    init(apiService:ApiManagerprotocol = ApiManager()){
         self.apiService = apiService
     }
     
@@ -29,17 +29,22 @@ class MoviesListViewModel {
     }
     
     func getNowPlayingMoviesList(){
-        apiService.getNowPlayingMoviesList(){ [weak self] result in
-            switch result {
-            case .success(let moviesInfo):
-                self?.movies = moviesInfo.results
-                self?.filteredMovies =  moviesInfo.results
-                self?.delegate?.didRecieveMovieInfo(movieInfo: moviesInfo)
-            case .failure(let error):
-                print(error)
-                self?.delegate?.didRecieveError(message: "Unable to fetch data")
+        if Reachability.isConnectedToNetwork(){
+            apiService.getNowPlayingMoviesList(){ [weak self] result in
+                switch result {
+                case .success(let moviesInfo):
+                    self?.movies = moviesInfo.results
+                    self?.filteredMovies =  moviesInfo.results
+                    self?.delegate?.didRecieveMovieInfo(movieInfo: moviesInfo)
+                case .failure(let error):
+                    print(error)
+                    self?.delegate?.didRecieveError(message: "Unable to fetch data")
+                }
             }
+        }else{
+            print("Internet Connection not Available!")
         }
+        
     }
     
     func getMoviesList () -> [Movie] {

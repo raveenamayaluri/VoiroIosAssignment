@@ -7,11 +7,16 @@
 
 import Foundation
 
-class MockNetworkManager: NetworkManagerprotocol {
+class MockApiManager: ApiManagerprotocol {
     
     func getNowPlayingMoviesList(callBack: @escaping (Result<MoviesInfo, Error>) -> Void) {
         callBack(.success(getMovieInfo()))
     }
+    
+    func getMovieDetails(movieId: String, callBack: @escaping (Result<MovieDetails, Error>) -> Void) {
+        
+    }
+    
     
     private func getMovieInfo()-> MoviesInfo {
         let dates = Dates(maximum: "2022-07-13", minimum: "2022-05-26")

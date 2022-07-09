@@ -40,7 +40,7 @@ class MoviesListViewController: UIViewController,UISearchBarDelegate {
         movieListDataSource = MoviesListTableviewDatasource(cellIdentifier: "MoviesListTableViewCell", items:viewModel.getMoviesList() , configureCell: {(cell ,movie) in
             cell.movieTitle.text = movie.originalTitle
             cell.ratingLabel.text = String(movie.voteAverage)
-            cell.MovieImage.sd_setImage(with: URL(string: APIConstants.TMDB_IMAGE_BASE_URL+movie.backdropPath), placeholderImage: UIImage(named: "placeholder.png"))
+            cell.MovieImage.sd_setImage(with: URL(string: ApiConstants.TMDB_IMAGE_BASE_URL+movie.backdropPath), placeholderImage: UIImage(named: "placeholder.png"))
         })
         self.tableView.dataSource = movieListDataSource
         self.tableView.reloadData()
@@ -48,14 +48,16 @@ class MoviesListViewController: UIViewController,UISearchBarDelegate {
 }
 extension MoviesListViewController : UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
-        MoveToMovieInformationController()
+        let movie = viewModel.getMoviesList()[indexPath.row]
+        MoveToMovieInformationController(movie)
     }
-    func MoveToMovieInformationController(){
+    private func MoveToMovieInformationController(_ movie:Movie){
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         guard let newViewController = storyBoard.instantiateViewController(withIdentifier: "MovieInfoViewController") as? MovieInfoViewController else
         {
             fatalError("Restoration ID not found")
         }
+        newViewController.movieId = movie.id
         self.navigationController?.pushViewController(newViewController, animated: true)
     }
 }
@@ -70,5 +72,6 @@ extension MoviesListViewController: MovieViewModelProtocol {
             self.updateTableviewData()
         }
     }
+    
 }
 
