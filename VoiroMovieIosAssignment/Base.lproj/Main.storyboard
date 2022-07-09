@@ -11,7 +11,7 @@
         <!--Movies-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="MoviesListViewController" customModule="VoiroMovieIosAssignment" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MoviesListViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="MoviesListViewController" customModule="VoiroMovieIosAssignment" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -24,7 +24,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="S8u-8i-gUM">
-                                <rect key="frame" x="0.0" y="148" width="414" height="558"/>
+                                <rect key="frame" x="0.0" y="148" width="414" height="714"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="MoviesListTableViewCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MoviesListTableViewCell" rowHeight="119" id="nY1-8a-ifC" customClass="MoviesListTableViewCell" customModule="VoiroMovieIosAssignment" customModuleProvider="target">
@@ -41,30 +41,39 @@
                                                         <constraint firstAttribute="width" constant="108" id="Py3-UI-ojH"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sVH-f5-JKd">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sVH-f5-JKd">
                                                     <rect key="frame" x="148" y="20" width="246" height="38"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ps7-ef-rQo">
-                                                    <rect key="frame" x="148" y="78" width="246" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ps7-ef-rQo">
+                                                    <rect key="frame" x="163" y="78" width="231" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="vCG-2C-LiN"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star" translatesAutoresizingMaskIntoConstraints="NO" id="6GT-KI-Hw2">
+                                                    <rect key="frame" x="148" y="81" width="15" height="15"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="15" id="bnl-ET-mv6"/>
+                                                        <constraint firstAttribute="width" constant="15" id="gkj-Ef-nHf"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="sVH-f5-JKd" firstAttribute="leading" secondItem="Cds-J7-CHb" secondAttribute="trailing" constant="20" id="0aj-7X-DPh"/>
-                                                <constraint firstItem="Ps7-ef-rQo" firstAttribute="leading" secondItem="Cds-J7-CHb" secondAttribute="trailing" constant="20" id="5Rq-5q-uif"/>
+                                                <constraint firstItem="Ps7-ef-rQo" firstAttribute="leading" secondItem="6GT-KI-Hw2" secondAttribute="trailing" id="42z-Pi-Q39"/>
                                                 <constraint firstAttribute="trailing" secondItem="Ps7-ef-rQo" secondAttribute="trailing" constant="20" id="6A3-Xi-3fo"/>
                                                 <constraint firstAttribute="bottom" secondItem="Ps7-ef-rQo" secondAttribute="bottom" constant="20" id="J2D-1N-fQE"/>
                                                 <constraint firstItem="sVH-f5-JKd" firstAttribute="top" secondItem="0rh-XU-72g" secondAttribute="top" constant="20" id="JCC-dV-Eb6"/>
+                                                <constraint firstItem="6GT-KI-Hw2" firstAttribute="centerY" secondItem="Ps7-ef-rQo" secondAttribute="centerY" id="XWG-VH-M8B"/>
                                                 <constraint firstItem="Cds-J7-CHb" firstAttribute="leading" secondItem="0rh-XU-72g" secondAttribute="leading" constant="20" symbolic="YES" id="ZTw-xg-X6G"/>
                                                 <constraint firstItem="Cds-J7-CHb" firstAttribute="centerY" secondItem="0rh-XU-72g" secondAttribute="centerY" id="cdK-1o-TSK"/>
+                                                <constraint firstItem="6GT-KI-Hw2" firstAttribute="leading" secondItem="Cds-J7-CHb" secondAttribute="trailing" constant="20" id="dAW-sb-8mE"/>
                                                 <constraint firstAttribute="trailing" secondItem="sVH-f5-JKd" secondAttribute="trailing" constant="20" id="izk-rI-Yq6"/>
                                                 <constraint firstItem="Ps7-ef-rQo" firstAttribute="top" secondItem="sVH-f5-JKd" secondAttribute="bottom" constant="20" id="zQ7-Gu-9wa"/>
                                             </constraints>
@@ -76,18 +85,22 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="Oti-wP-Wgs"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="jlw-zW-ylZ"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="S8u-8i-gUM" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="2eA-de-76G"/>
                             <constraint firstItem="DRe-iI-iQQ" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="33z-dd-eT1"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="S8u-8i-gUM" secondAttribute="bottom" id="F6p-1J-1w0"/>
                             <constraint firstItem="S8u-8i-gUM" firstAttribute="top" secondItem="DRe-iI-iQQ" secondAttribute="bottom" constant="10" id="FbS-qV-8lS"/>
-                            <constraint firstItem="S8u-8i-gUM" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.622768" id="VJF-9K-knr"/>
-                            <constraint firstItem="S8u-8i-gUM" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="hIC-wg-InC"/>
+                            <constraint firstItem="S8u-8i-gUM" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="PYO-DT-Gps"/>
                             <constraint firstItem="DRe-iI-iQQ" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="hVY-vY-Jg6"/>
                             <constraint firstItem="DRe-iI-iQQ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="vAB-lx-Yda"/>
+                            <constraint firstItem="S8u-8i-gUM" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="wf6-IU-tlh"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Movies" id="fBc-Qn-Iht">
@@ -102,10 +115,10 @@
             </objects>
             <point key="canvasLocation" x="984.05797101449286" y="83.705357142857139"/>
         </scene>
-        <!--View Controller-->
+        <!--Movie Info View Controller-->
         <scene sceneID="GXr-fL-h8r">
             <objects>
-                <viewController id="y1I-PC-Ak6" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MovieInfoViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="y1I-PC-Ak6" customClass="MovieInfoViewController" customModule="VoiroMovieIosAssignment" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7RE-jp-7lv">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -256,6 +269,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="star" width="128" height="128"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
