@@ -6,12 +6,14 @@
 //
 
 import Foundation
+
 protocol MovieInfoViewModelProtocol {
     func didRecieveMovieInfo(movieDetails: MovieDetails)
     func didRecieveError(message: String)
 }
 
 class MovieInfoViewModel {
+    
     var delegate: MovieInfoViewModelProtocol?
     let apiService: ApiManagerprotocol
     private var movieDetails:MovieDetails?
@@ -33,11 +35,10 @@ class MovieInfoViewModel {
                 }
             }
         }else{
-            print("Internet Not Available")
+            delegate?.didRecieveError(message: "No Internet Connection")
         }
-        
-        
     }
+    
     func getMovieRunTime(runTime:Int) -> String{
         let hours = runTime / 60
         let minutes = runTime-hours*60

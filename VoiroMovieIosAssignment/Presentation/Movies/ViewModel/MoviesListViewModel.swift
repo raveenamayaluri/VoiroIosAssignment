@@ -7,14 +7,14 @@
 
 import Foundation
 
-protocol MovieViewModelProtocol {
+protocol MovieListViewModelProtocol {
     func didRecieveMovieInfo(movieInfo: MoviesInfo)
     func didRecieveError(message: String)
 }
 
-class MoviesListViewModel {
+class MovieListViewModel {
     
-    var delegate: MovieViewModelProtocol?
+    var delegate: MovieListViewModelProtocol?
     let apiService: ApiManagerprotocol
     
     private var movies = [Movie]()
@@ -43,8 +43,8 @@ class MoviesListViewModel {
             }
         }else{
             print("Internet Connection not Available!")
+            self.delegate?.didRecieveError(message: "No Internet Connection")
         }
-        
     }
     
     func getMoviesList () -> [Movie] {

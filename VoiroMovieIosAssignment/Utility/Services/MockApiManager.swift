@@ -17,7 +17,6 @@ class MockApiManager: ApiManagerprotocol {
         
     }
     
-    
     private func getMovieInfo()-> MoviesInfo {
         let dates = Dates(maximum: "2022-07-13", minimum: "2022-05-26")
         
@@ -28,4 +27,5 @@ class MockApiManager: ApiManagerprotocol {
         let movieInfo = MoviesInfo(dates: dates, page: 1, results: [movie1,movie2], totalPages: 67, totalResults: 1340)
         return movieInfo
     }
+    
 }

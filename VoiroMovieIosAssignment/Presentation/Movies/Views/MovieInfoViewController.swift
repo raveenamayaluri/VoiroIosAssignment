@@ -10,10 +10,11 @@ import UIKit
 class MovieInfoViewController: UIViewController {
 
     var movieId:Int!
-    private var viewModel = MovieInfoViewModel()
-
-    @IBOutlet weak var movieImage: UIImageView!
     
+    private var viewModel = MovieInfoViewModel()
+    private var spinner = SpinnerViewController()
+    
+    @IBOutlet weak var movieImage: UIImageView!
     @IBOutlet weak var movieTile: UILabel!
     @IBOutlet weak var durationTimeLabel: UILabel!
     @IBOutlet weak var releaseDate: UILabel!
@@ -25,17 +26,18 @@ class MovieInfoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = "Movie Details"
+        self.title = "Movie Details"
         viewModel.delegate = self
+       
+        showLoading()
         viewModel.getMovieDetails(movieId: movieId)
-        // Do any additional setup after loading the view.
     }
     
     func setMovieDetails(selectedMovie:MovieDetails) {
         durationTimeLabel.text =  viewModel.getMovieRunTime(runTime: selectedMovie.runtime)
         releaseDate.text = selectedMovie.releaseDate
         movieTile.text = selectedMovie.title
-        movieImage.sd_setImage(with: URL(string: ApiConstants.TMDB_IMAGE_BASE_URL+selectedMovie.backdropPath),placeholderImage: UIImage(named: "placeholder.png"))
+        movieImage.sd_setImage(with: URL(string: Strings.APIConstants.TMDB_IMAGE_BASE_URL+selectedMovie.backdropPath),placeholderImage: UIImage(named: "Movie_placeholder.png"))
         genresLabel.text = viewModel.getMovieGenres(genres: selectedMovie.genres)
         ratingLabel.text = "\(selectedMovie.voteAverage) & \(selectedMovie.voteCount) votes"
         languageLabel.text = viewModel.getMovieLanguages(spokenLanguages: selectedMovie.spokenLanguages)
@@ -45,6 +47,7 @@ class MovieInfoViewController: UIViewController {
 }
 
 extension MovieInfoViewController:MovieInfoViewModelProtocol{
+    
     func didRecieveMovieInfo(movieDetails: MovieDetails) {
         DispatchQueue.main.async {
             self.setMovieDetails(selectedMovie: movieDetails)
@@ -52,8 +55,24 @@ extension MovieInfoViewController:MovieInfoViewModelProtocol{
     }
     
     func didRecieveError(message: String) {
-        
+        DispatchQueue.main.async {
+        Alert.present(title: "Alert", message: message, from: self)
+        }
+    }
+}
+
+extension MovieInfoViewController: SpinnerProtocl {
+    
+    func showLoading() {
+        addChild(spinner)
+        spinner.view.frame = view.frame
+        view.addSubview(spinner.view)
+        spinner.didMove(toParent: self)
     }
     
-    
+    func hideLoading() {
+        spinner.willMove(toParent: nil)
+        spinner.view.removeFromSuperview()
+        spinner.removeFromParent()
+    }
 }
