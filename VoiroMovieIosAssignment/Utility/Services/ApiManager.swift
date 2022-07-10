@@ -8,63 +8,58 @@
 import Foundation
 
 protocol ApiManagerprotocol {
-    func getNowPlayingMoviesList( callBack: @escaping (Result<MoviesInfo,Error>) -> Void)
-    func getMovieDetails(movieId:String, callBack: @escaping (Result<MovieDetails,Error>) -> Void)
+    func getNowPlayingMoviesList(completion: @escaping (Result<MoviesInfo,ApiError>) -> Void)
+    func getMovieDetails(movieId:String, completion: @escaping (Result<MovieDetail,ApiError>) -> Void)
 }
 
 class ApiManager: ApiManagerprotocol {
-    
-    func getMovieDetails(movieId:String, callBack: @escaping (Result<MovieDetails, Error>) -> Void) {
+  
+    func getNowPlayingMoviesList(completion: @escaping (Result<MoviesInfo, ApiError>) -> Void) {
+        guard let requestUrl = URL(string: Strings.APIConstants.TMDB_BASE_URL) else {
+            completion(.failure(.invalidUrlError))
+            return
+        }
         
-        let tmdbMovieDetailsUrlString = Strings.APIConstants.TMDB_MOVIE_DETAILS_BASE_URL.replacingOccurrences(of: "MOVIE_ID", with: movieId)
-        guard let requestUrl = URL(string: tmdbMovieDetailsUrlString) else {
-            fatalError("Invalid Url")
-        }
-        let request = URLRequest(url: requestUrl)
-        let dataTask = URLSession.shared.dataTask(with: request) { (data, response ,error) in
-            if let error = error  {
-                return callBack(.failure(error))
-            } else{
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                if let data = data{
-                    do {
-                        //process data
-                        let moviesDetails = try decoder.decode(MovieDetails.self, from: data)
-                        callBack(.success(moviesDetails))
-                        print(moviesDetails)
-                        
-                    }  catch  let decodeError {
-                        callBack(.failure(decodeError))
-                    }
-                }
-            }
-        }
-        dataTask.resume()
+        request(url: requestUrl, method: "GET", completion: completion)
     }
     
-    func getNowPlayingMoviesList( callBack: @escaping (Result<MoviesInfo,Error>) -> Void){
-        guard let requestUrl = URL(string: Strings.APIConstants.TMDB_BASE_URL) else {
-            fatalError("Invalid Url")
+    func getMovieDetails(movieId:String, completion: @escaping (Result<MovieDetail, ApiError>) -> Void) {
+        let tmdbMovieDetailsUrlString = Strings.APIConstants.TMDB_MOVIE_DETAILS_BASE_URL.replacingOccurrences(of: "MOVIE_ID", with: movieId)
+        guard let requestUrl = URL(string: tmdbMovieDetailsUrlString) else {
+            completion(.failure(.invalidUrlError))
+            return
         }
-        let request = URLRequest(url: requestUrl)
+        
+        request(url: requestUrl, method: "GET", completion: completion)
+    }
+    
+    
+    private func request<T:Decodable>(url:URL, method:String, completion: @escaping (Result<T,ApiError>) -> Void) {
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = method
+        
         let dataTask = URLSession.shared.dataTask(with: request) { (data, response ,error) in
-            if let error = error  {
-                return callBack(.failure(error))
-            } else{
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                if let data = data{
-                    do {
-                        //process data
-                        let moviesInfo = try decoder.decode(MoviesInfo.self, from: data)
-                        callBack(.success(moviesInfo))
-                        print(moviesInfo)
-                        
-                    }  catch  let decodeError {
-                        callBack(.failure(decodeError))
-                    }
-                }
+            
+            guard error == nil else {
+                completion(.failure(.serverError))
+                return
+            }
+            
+            guard let data = data else {
+                completion(.failure(.serverError))
+                return
+            }
+            
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            do {
+                //process data
+                let object = try decoder.decode(T.self, from: data)
+                completion(.success(object))
+                
+            } catch  {
+                completion(.failure(.parsingError))
             }
         }
         dataTask.resume()

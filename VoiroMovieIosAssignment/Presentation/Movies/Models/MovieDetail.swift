@@ -1,5 +1,5 @@
 //
-//  MovieDetails.swift
+//  MovieDetail.swift
 //  VoiroMovieIosAssignment
 //
 //  Created by Raveena on 09/07/22.
@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - MovieDetails
-struct MovieDetails: Codable {
+struct MovieDetail: Codable {
     let adult: Bool
     let backdropPath: String
     let belongsToCollection: BelongsToCollection?

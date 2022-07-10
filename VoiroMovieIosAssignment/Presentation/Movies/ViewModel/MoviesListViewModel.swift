@@ -1,5 +1,5 @@
 //
-//  MoviesLIstModel.swift
+//  MovieListViewModel.swift
 //  VoiroMovieIosAssignment
 //
 //  Created by Raveena on 08/07/22.
@@ -8,7 +8,7 @@
 import Foundation
 
 protocol MovieListViewModelProtocol {
-    func didRecieveMovieInfo(movieInfo: MoviesInfo)
+    func didRecieveMovieInfo()
     func didRecieveError(message: String)
 }
 
@@ -20,7 +20,7 @@ class MovieListViewModel {
     private var movies = [Movie]()
     private var filteredMovies = [Movie]()
     
-    init(apiService:ApiManagerprotocol = ApiManager()){
+    init(apiService:ApiManagerprotocol = ApiManager()) {
         self.apiService = apiService
     }
     
@@ -28,26 +28,24 @@ class MovieListViewModel {
         filteredMovies = searchText.isEmpty ? movies : movies.filter({$0.originalTitle.localizedCaseInsensitiveContains(searchText)})
     }
     
-    func getNowPlayingMoviesList(){
+    func getNowPlayingMoviesList() {
         if Reachability.isConnectedToNetwork(){
             apiService.getNowPlayingMoviesList(){ [weak self] result in
                 switch result {
                 case .success(let moviesInfo):
                     self?.movies = moviesInfo.results
                     self?.filteredMovies =  moviesInfo.results
-                    self?.delegate?.didRecieveMovieInfo(movieInfo: moviesInfo)
+                    self?.delegate?.didRecieveMovieInfo()
                 case .failure(let error):
-                    print(error)
                     self?.delegate?.didRecieveError(message: "Unable to fetch data")
                 }
             }
         }else{
-            print("Internet Connection not Available!")
             self.delegate?.didRecieveError(message: "No Internet Connection")
         }
     }
     
-    func getMoviesList () -> [Movie] {
+    func getMoviesList() -> [Movie] {
         return filteredMovies
     }
 }

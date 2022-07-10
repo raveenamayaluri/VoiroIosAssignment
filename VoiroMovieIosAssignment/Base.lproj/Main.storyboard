@@ -115,10 +115,10 @@
             </objects>
             <point key="canvasLocation" x="984.05797101449286" y="83.705357142857139"/>
         </scene>
-        <!--Movie Info View Controller-->
+        <!--Movie Detail View Controller-->
         <scene sceneID="GXr-fL-h8r">
             <objects>
-                <viewController storyboardIdentifier="MovieInfoViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="y1I-PC-Ak6" customClass="MovieInfoViewController" customModule="VoiroMovieIosAssignment" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MovieDetailViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="y1I-PC-Ak6" customClass="MovieDetailViewController" customModule="VoiroMovieIosAssignment" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7RE-jp-7lv">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

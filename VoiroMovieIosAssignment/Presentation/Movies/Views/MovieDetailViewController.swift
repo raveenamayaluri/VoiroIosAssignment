@@ -1,5 +1,5 @@
 //
-//  MovieInfoViewController.swift
+//  MovieDetailViewController.swift
 //  VoiroMovieIosAssignment
 //
 //  Created by Raveena on 08/07/22.
@@ -7,11 +7,11 @@
 
 import UIKit
 
-class MovieInfoViewController: UIViewController {
-
+class MovieDetailViewController: UIViewController {
+    
     var movieId:Int!
     
-    private var viewModel = MovieInfoViewModel()
+    private var viewModel = MovieDetailViewModel()
     private var spinner = SpinnerViewController()
     
     @IBOutlet weak var movieImage: UIImageView!
@@ -28,14 +28,18 @@ class MovieInfoViewController: UIViewController {
         super.viewDidLoad()
         self.title = "Movie Details"
         viewModel.delegate = self
-       
+        
         showLoading()
         viewModel.getMovieDetails(movieId: movieId)
     }
     
-    func setMovieDetails(selectedMovie:MovieDetails) {
+    func setMovieDetails() {
+        
+        guard let selectedMovie = viewModel.getSelectedMovieDetail() else {
+            return
+        }
         durationTimeLabel.text =  viewModel.getMovieRunTime(runTime: selectedMovie.runtime)
-        releaseDate.text = selectedMovie.releaseDate
+        releaseDate.text = viewModel.getFormattedDateFromString(dateString: selectedMovie.releaseDate)
         movieTile.text = selectedMovie.title
         movieImage.sd_setImage(with: URL(string: Strings.APIConstants.TMDB_IMAGE_BASE_URL+selectedMovie.backdropPath),placeholderImage: UIImage(named: "Movie_placeholder.png"))
         genresLabel.text = viewModel.getMovieGenres(genres: selectedMovie.genres)
@@ -46,22 +50,24 @@ class MovieInfoViewController: UIViewController {
     }
 }
 
-extension MovieInfoViewController:MovieInfoViewModelProtocol{
+extension MovieDetailViewController:MovieDetailViewModelProtocol{
     
-    func didRecieveMovieInfo(movieDetails: MovieDetails) {
+    func didRecieveMovies() {
         DispatchQueue.main.async {
-            self.setMovieDetails(selectedMovie: movieDetails)
+            self.hideLoading()
+            self.setMovieDetails()
         }
     }
     
     func didRecieveError(message: String) {
         DispatchQueue.main.async {
-        Alert.present(title: "Alert", message: message, from: self)
+            self.hideLoading()
+            Alert.present(title: "Alert", message: message, from: self)
         }
     }
 }
 
-extension MovieInfoViewController: SpinnerProtocl {
+extension MovieDetailViewController: SpinnerProtocl {
     
     func showLoading() {
         addChild(spinner)
